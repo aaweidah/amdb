@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React, { useState} from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Main from './components/Main';
+import Navbar from './components/Navbar';
+import mainJson from "./components/mainJson";
+import TopMovies from './components/TopMovies';
 
-function App() {
+const App = () => {
+  
+  const [movies, setMovies] = useState(mainJson);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router basename={process.env.PUBLIC_URL}>
+      <div className='bg-dark container-fluid movie-app justify-content-center'>
+        <Navbar setMovies={setMovies}/>
+      </div>
+        <Routes>
+          <Route path="/top100" element={<TopMovies className="bg-danger"/>}/>
+            {/* <Navbar setMovies={setMovies}/> */}
+          <Route path="/" element={<Main movies={movies} setMovies={setMovies}/>}/> 
+            {/* <Main movies={movies}/> */}
+        </Routes>
+    </Router>
+  )
 }
 
 export default App;
